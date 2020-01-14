@@ -1,6 +1,8 @@
 import React from 'react';
-import './UsersList.css';
 import UserItem from './UserItem';
+
+import './UsersList.css';
+
 
 const UsersList = props => {
   if (props.items.length === 0) {
