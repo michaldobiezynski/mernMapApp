@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
@@ -6,7 +6,6 @@ import Button from '../../shared/components/FormElements/Button';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-  VALIDATOR_MIN,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 
@@ -42,23 +41,41 @@ const DUMMY_PLACES = [
 ];
 
 const UpdatePlace = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const placeId = useParams().placeId;
+
+  const [formState, inputHandler, setFormData] = useForm(
+    {
+      title: {
+        value: '',
+        isValid: false,
+      },
+      description: {
+        value: '',
+        isValid: false,
+      },
+    },
+    false,
+  );
 
   const identifiedPlace = DUMMY_PLACES.find(p => p.id === placeId);
 
-  const [formState, inputHandler] = useForm(
-    {
-      title: {
-        value: identifiedPlace.title,
-        isValid: true,
+  useEffect(() => {
+    setFormData(
+      {
+        title: {
+          value: identifiedPlace.title,
+          isValid: true,
+        },
+        description: {
+          value: identifiedPlace.description,
+          isValid: true,
+        },
       },
-      description: {
-        value: identifiedPlace.description,
-        isValid: true,
-      },
-    },
-    true,
-  );
+      true,
+    );
+    setIsLoading(false);
+  }, [setFormData, identifiedPlace]);
 
   const placeUpdateSubmitHandler = event => {
     event.preventDefault();
@@ -69,6 +86,14 @@ const UpdatePlace = () => {
     return (
       <div className='center'>
         <h2>Could not find place!</h2>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className='center'>
+        <h2>Loading...!</h2>
       </div>
     );
   }
@@ -101,8 +126,6 @@ const UpdatePlace = () => {
       </Button>
     </form>
   );
-
-  return <h2>Update place!</h2>;
 };
 
 export default UpdatePlace;
