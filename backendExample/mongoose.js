@@ -18,7 +18,10 @@ const createProduct = async (req, res, next) => {
     name: req.body.name,
     price: req.body.price,
   });
+
+  console.log(createdProduct);
   const result = await createdProduct.save();
+  console.log(typeof createdProduct.id);
 
   res.json(result);
 };
