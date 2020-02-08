@@ -10,10 +10,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/api/places', placesRoutes);
-
-app.use('/api/users', usersRoutes);
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -21,9 +17,12 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-  
+
   next();
 });
+
+app.use('/api/places', placesRoutes);
+app.use('/api/users', usersRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
@@ -31,10 +30,9 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  if (res.headerSend) {
+  if (res.headerSent) {
     return next(error);
   }
-
   res.status(error.code || 500);
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
@@ -42,11 +40,10 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(
     'mongodb+srv://michal123:michal123@devconnector-6tf9d.mongodb.net/mern?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   )
   .then(() => {
     app.listen(5000);
   })
-  .catch(error => {
-    console.log(error);
+  .catch(err => {
+    console.log(err);
   });
