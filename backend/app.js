@@ -30,7 +30,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://michal123:michal123@devconnector-6tf9d.mongodb.net/places?retryWrites=true&w=majority',
+    'mongodb+srv://michal123:michal123@devconnector-6tf9d.mongodb.net/mern?retryWrites=true&w=majority',
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   )
   .then(() => {
