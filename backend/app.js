@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const placesRoutes = require('./routes/places-routes');
-const usersRoutes = require('./routes/user-routes');
+const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -39,7 +39,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://michal123:michal123@devconnector-6tf9d.mongodb.net/mern?retryWrites=true&w=majority',
+    `mongodb+srv://michal123:michal123@devconnector-6tf9d.mongodb.net/mern?retryWrites=true&w=majority `,
   )
   .then(() => {
     app.listen(5000);

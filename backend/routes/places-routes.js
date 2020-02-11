@@ -1,9 +1,9 @@
 const express = require('express');
 const { check } = require('express-validator');
 
-const router = express.Router();
+const placesControllers = require('../controllers/places-controllers');
 
-const placesControllers = require('../controllers/places-controller');
+const router = express.Router();
 
 router.get('/:pid', placesControllers.getPlaceById);
 
@@ -18,9 +18,9 @@ router.post(
     check('description').isLength({ min: 5 }),
     check('address')
       .not()
-      .isEmpty(),
+      .isEmpty()
   ],
-  placesControllers.createPlace,
+  placesControllers.createPlace
 );
 
 router.patch(
@@ -29,9 +29,9 @@ router.patch(
     check('title')
       .not()
       .isEmpty(),
-    check('description').isLength({ min: 5 }),
+    check('description').isLength({ min: 5 })
   ],
-  placesControllers.updatePlace,
+  placesControllers.updatePlace
 );
 
 router.delete('/:pid', placesControllers.deletePlace);
