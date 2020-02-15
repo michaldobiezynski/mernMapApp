@@ -10,7 +10,7 @@ const getUsers = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Fetching users failed, please try again later.',
-      500
+      500,
     );
     return next(error);
   }
@@ -21,7 +21,7 @@ const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
+      new HttpError('Invalid inputs passed, please check your data.', 422),
     );
   }
   const { name, email, password } = req.body;
@@ -32,7 +32,7 @@ const signup = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Signing up failed, please try again later.',
-      500
+      500,
     );
     return next(error);
   }
@@ -40,7 +40,7 @@ const signup = async (req, res, next) => {
   if (existingUser) {
     const error = new HttpError(
       'User exists already, please login instead.',
-      422
+      422,
     );
     return next(error);
   }
@@ -50,7 +50,7 @@ const signup = async (req, res, next) => {
     email,
     image: 'https://live.staticflickr.com/7631/26849088292_36fc52ee90_b.jpg',
     password,
-    places: []
+    places: [],
   });
 
   try {
@@ -58,7 +58,7 @@ const signup = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Signing up failed, please try again later.',
-      500
+      500,
     );
     return next(error);
   }
@@ -76,7 +76,7 @@ const login = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Loggin in failed, please try again later.',
-      500
+      500,
     );
     return next(error);
   }
@@ -84,14 +84,14 @@ const login = async (req, res, next) => {
   if (!existingUser || existingUser.password !== password) {
     const error = new HttpError(
       'Invalid credentials, could not log you in.',
-      401
+      401,
     );
     return next(error);
   }
 
   res.json({
     message: 'Logged in!',
-    user: existingUser.toObject({ getters: true })
+    user: existingUser.toObject({ getters: true }),
   });
 };
 
