@@ -40,7 +40,6 @@ app.use((error, req, res, next) => {
       console.log(err);
     });
   }
-
   if (res.headerSent) {
     return next(error);
   }
@@ -50,7 +49,8 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://michal123:michal123@devconnector-6tf9d.mongodb.net/mern?retryWrites=true&w=majority `,
+    `mongodb+srv://michal123:michal123@devconnector-6tf9d.mongodb.net/mern?retryWrites=true&w=majority
+    `,
   )
   .then(() => {
     app.listen(5000);

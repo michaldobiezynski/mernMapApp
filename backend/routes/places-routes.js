@@ -23,9 +23,9 @@ router.post(
     check('description').isLength({ min: 5 }),
     check('address')
       .not()
-      .isEmpty(),
+      .isEmpty()
   ],
-  placesControllers.createPlace,
+  placesControllers.createPlace
 );
 
 router.patch(
@@ -34,9 +34,9 @@ router.patch(
     check('title')
       .not()
       .isEmpty(),
-    check('description').isLength({ min: 5 }),
+    check('description').isLength({ min: 5 })
   ],
-  placesControllers.updatePlace,
+  placesControllers.updatePlace
 );
 
 router.delete('/:pid', placesControllers.deletePlace);

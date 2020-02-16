@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-const uuid = require('uuid/v4');
 const { validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 
@@ -18,7 +17,7 @@ const getPlaceById = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not find a place.',
-      500,
+      500
     );
     return next(error);
   }
@@ -26,7 +25,7 @@ const getPlaceById = async (req, res, next) => {
   if (!place) {
     const error = new HttpError(
       'Could not find place for the provided id.',
-      404,
+      404
     );
     return next(error);
   }
@@ -44,7 +43,7 @@ const getPlacesByUserId = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Fetching places failed, please try again later.',
-      500,
+      500
     );
     return next(error);
   }
@@ -52,14 +51,14 @@ const getPlacesByUserId = async (req, res, next) => {
   // if (!places || places.length === 0) {
   if (!userWithPlaces || userWithPlaces.places.length === 0) {
     return next(
-      new HttpError('Could not find places for the provided user id.', 404),
+      new HttpError('Could not find places for the provided user id.', 404)
     );
   }
 
   res.json({
     places: userWithPlaces.places.map(place =>
-      place.toObject({ getters: true }),
-    ),
+      place.toObject({ getters: true })
+    )
   });
 };
 
@@ -67,7 +66,7 @@ const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422),
+      new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
 
@@ -86,7 +85,7 @@ const createPlace = async (req, res, next) => {
     address,
     location: coordinates,
     image: req.file.path,
-    creator,
+    creator
   });
 
   let user;
@@ -95,7 +94,7 @@ const createPlace = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Creating place failed, please try again.',
-      500,
+      500
     );
     return next(error);
   }
@@ -117,7 +116,7 @@ const createPlace = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Creating place failed, please try again.',
-      500,
+      500
     );
     return next(error);
   }
@@ -129,7 +128,7 @@ const updatePlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422),
+      new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
 
@@ -142,7 +141,7 @@ const updatePlace = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not update place.',
-      500,
+      500
     );
     return next(error);
   }
@@ -155,7 +154,7 @@ const updatePlace = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not update place.',
-      500,
+      500
     );
     return next(error);
   }
@@ -172,7 +171,7 @@ const deletePlace = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not delete place.',
-      500,
+      500
     );
     return next(error);
   }
@@ -194,7 +193,7 @@ const deletePlace = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not delete place.',
-      500,
+      500
     );
     return next(error);
   }
