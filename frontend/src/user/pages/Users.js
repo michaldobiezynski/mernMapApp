@@ -13,7 +13,7 @@ const Users = () => {
     const fetchUsers = async () => {
       try {
         const responseData = await sendRequest(
-          'http://localhost:5000/api/users'
+          'https://mern-map.herokuapp.com/api/users',
         );
 
         setLoadedUsers(responseData.users);
@@ -26,7 +26,7 @@ const Users = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && (
-        <div className="center">
+        <div className='center'>
           <LoadingSpinner />
         </div>
       )}
